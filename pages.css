@@ -1,0 +1,717 @@
+/* ───────────────────────────────────────────────────────────
+   Shared styles for notebook sub-pages.
+   Swap the background image in ONE place: --notebook-bg below.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --paper: #f8f7ea;          /* warm cream paper */
+  --paper-translucent: rgba(248, 247, 234, 0.95);
+  --ink: #1f1d18;
+  --ink-soft: #514d44;
+  --accent: #2d7a4a;
+  --notebook-bg: url("assets/bg2.png");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body.notebook {
+  min-height: 100%;
+  color: var(--ink);
+  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: clamp(1rem, 1.05vw + 0.7rem, 1.18rem);
+  line-height: 1.65;
+  /* warm cream paper underneath the messy doodle scan */
+  background:
+    #f4f1e4 var(--notebook-bg) center center / cover no-repeat fixed;
+}
+
+/* faint paper grain overlay across the whole page */
+body.notebook::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ── layout ──────────────────────────────────────────────── */
+.notebook-page {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.2rem, 5vw, 4rem) clamp(4rem, 8vw, 7rem);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: clamp(1.2rem, 3vw, 2.2rem);
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: "Gaegu", "Patrick Hand", "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper);
+  border-radius: 16px 20px 14px 22px / 20px 14px 22px 16px;
+  padding: 0.3em 0.8em;
+  box-shadow: 0 4px 14px rgba(60, 60, 40, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.home-link:hover {
+  transform: translateY(-2px) rotate(-1deg);
+  box-shadow: 0 7px 18px rgba(60, 60, 40, 0.24);
+}
+
+.page-title {
+  display: inline-block;
+  font-family: "Gaegu", "Patrick Hand", "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 0.08em 0.4em 0.16em;
+  border-radius: 26px 32px 22px 34px / 30px 22px 34px 26px;
+  box-shadow: 0 8px 22px rgba(60, 60, 40, 0.2);
+  transform: rotate(-1.2deg);
+  margin-bottom: clamp(1.4rem, 3.5vw, 2.6rem);
+}
+
+.page-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: clamp(0.75rem, 2vw, 1.4rem);
+  margin-bottom: clamp(1.4rem, 3.5vw, 2.6rem);
+}
+
+.page-title-row .page-title {
+  margin-bottom: 0;
+}
+
+.page-title-aside {
+  font-family: "Patrick Hand", "Gaegu", cursive;
+  font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--ink-soft);
+  background: var(--paper-translucent);
+  padding: 0.28em 0.7em 0.34em;
+  border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
+  box-shadow: 0 6px 18px rgba(60, 60, 40, 0.16);
+  transform: rotate(0.7deg);
+}
+
+.page-subtitle {
+  max-width: 40ch;
+  margin: -0.6rem 0 2rem 0.3rem;
+  font-family: "Patrick Hand", "Gaegu", cursive;
+  font-size: 1.3rem;
+  color: var(--ink-soft);
+  background: var(--paper-translucent);
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+/* ── paper panel ("carved out" cream cutout) ─────────────── */
+.paper-panel {
+  position: relative;
+  background: var(--paper-translucent);
+  /* deliberately uneven corners so it reads as a cleared paper space */
+  border-radius: 28px 34px 24px 36px / 32px 24px 36px 28px;
+  padding: clamp(1.4rem, 3vw, 2.6rem) clamp(1.4rem, 3.2vw, 2.8rem);
+  box-shadow:
+    0 12px 32px rgba(55, 55, 35, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+/* subtle paper grain inside each panel */
+.paper-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+.panel-title {
+  font-family: "Gaegu", "Patrick Hand", cursive;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  line-height: 1.05;
+  margin-bottom: 0.5em;
+  color: var(--ink);
+}
+
+.panel-meta {
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.6em;
+}
+
+.panel-body {
+  color: var(--ink);
+}
+.panel-body p + p { margin-top: 0.9em; }
+.panel-body a { color: var(--accent); }
+
+/* lists for quick facts */
+.fact-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+}
+.fact-list li {
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.15rem;
+  background: rgba(45, 122, 74, 0.1);
+  border: 1.5px dashed rgba(45, 122, 74, 0.5);
+  border-radius: 12px 16px 10px 18px / 16px 10px 18px 12px;
+  padding: 0.25em 0.7em;
+}
+
+/* hand-drawn style link / button */
+.paper-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: "Gaegu", "Patrick Hand", cursive;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 0.2em 0.85em 0.3em;
+  border: 2.5px solid var(--ink);
+  border-radius: 16px 22px 14px 24px / 20px 14px 24px 16px;
+  background: #fffdf3;
+  box-shadow: 3px 3px 0 rgba(31, 29, 24, 0.85);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.paper-link:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 rgba(31, 29, 24, 0.85);
+}
+
+.paper-link--soon {
+  cursor: default;
+  color: var(--ink-soft);
+  border-color: var(--ink-soft);
+  background: rgba(255, 253, 243, 0.75);
+  box-shadow: 2px 2px 0 rgba(81, 77, 68, 0.45);
+  opacity: 0.92;
+}
+
+.paper-link--soon:hover {
+  transform: none;
+  box-shadow: 2px 2px 0 rgba(81, 77, 68, 0.45);
+}
+
+/* contact page — compact left-aligned panel + icon rows */
+.notebook--contact .page-content {
+  align-items: flex-start;
+}
+
+.notebook--contact .page-title {
+  margin-bottom: clamp(0.9rem, 2vw, 1.4rem);
+}
+
+.contact-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  width: 100%;
+  min-width: 0;
+}
+
+.contact-photo-card {
+  flex: 0 1 clamp(200px, 28vw, 300px);
+  margin-left: auto;
+  margin-top: clamp(0.25rem, 1vw, 0.75rem);
+  padding: clamp(0.65rem, 1.4vw, 0.9rem) clamp(0.65rem, 1.4vw, 0.9rem) clamp(1.4rem, 2.5vw, 2rem);
+  background: var(--paper-translucent);
+  border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
+  box-shadow:
+    0 10px 28px rgba(55, 55, 35, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transform: rotate(1.1deg);
+}
+
+.contact-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px 12px 10px 14px / 12px 10px 14px 8px;
+  border: 2px solid rgba(255, 253, 243, 0.9);
+  box-shadow: 0 2px 8px rgba(55, 55, 35, 0.12);
+}
+
+.paper-panel--contact {
+  width: fit-content;
+  max-width: min(90%, 520px);
+  margin: 0;
+  align-self: flex-start;
+  padding: clamp(0.85rem, 2vw, 1.25rem) clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.paper-panel--contact .panel-title {
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  margin-bottom: 0.45em;
+}
+
+.contact-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.1rem 0;
+  border-bottom: 2px dotted transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.contact-row:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.contact-icon {
+  flex: 0 0 1.35rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  color: var(--ink-soft);
+}
+
+.contact-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.contact-icon--brand {
+  color: inherit;
+}
+
+.contact-row:hover .contact-icon:not(.contact-icon--brand) {
+  color: var(--accent);
+}
+
+.contact-label {
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* ── grids ───────────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(1.1rem, 2.4vw, 1.8rem);
+  align-items: start;
+}
+
+.card-grid .paper-panel {
+  transform: none;
+  height: auto;
+  align-self: start;
+}
+
+.project-image {
+  width: 100%;
+  margin-top: 1rem;
+  aspect-ratio: 16 / 10;
+  min-height: clamp(120px, 22vw, 180px);
+  border-radius: 16px 20px 14px 22px / 18px 14px 22px 16px;
+  border: 2px dashed rgba(81, 77, 68, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 4px 14px rgba(60, 60, 40, 0.12);
+  overflow: hidden;
+  background: rgba(255, 253, 243, 0.9);
+}
+
+.project-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* about page */
+.notebook--about .page-content {
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+  width: 100%;
+  min-width: 0;
+}
+
+.about-section-title {
+  font-family: "Gaegu", "Patrick Hand", cursive;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+  line-height: 1;
+  color: var(--ink);
+  background: var(--paper-translucent);
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.12em 0.45em 0.2em;
+  border-radius: 18px 24px 16px 26px / 22px 16px 26px 18px;
+  box-shadow: 0 6px 18px rgba(60, 60, 40, 0.16);
+  transform: rotate(-0.6deg);
+}
+
+.about-section--intro {
+  position: relative;
+}
+
+.about-intro-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.about-photo-circle {
+  position: absolute;
+  top: 0;
+  right: clamp(0.25rem, 2vw, 1.25rem);
+  width: clamp(120px, 14vw, 190px);
+  height: clamp(120px, 14vw, 190px);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 2;
+  border: 3px solid rgba(248, 247, 234, 0.95);
+  box-shadow: 0 6px 18px rgba(60, 60, 40, 0.22);
+  transform: translateY(28%);
+  pointer-events: none;
+}
+
+.paper-panel--intro {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  padding-right: clamp(5.5rem, 17vw, 10rem);
+}
+
+.paper-panel--intro .panel-body p {
+  font-size: clamp(1rem, 1.05vw + 0.75rem, 1.15rem);
+  line-height: 1.7;
+}
+
+.img-placeholder {
+  background:
+    linear-gradient(145deg, rgba(255, 253, 243, 0.9), rgba(244, 241, 228, 0.75));
+  border: 2px dashed rgba(81, 77, 68, 0.32);
+  border-radius: 16px 20px 14px 22px / 18px 14px 22px 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.science-image {
+  width: 100%;
+  height: clamp(140px, 18vw, 200px);
+  margin-bottom: 0.9rem;
+  border-radius: 16px 20px 14px 22px / 18px 14px 22px 16px;
+  border: 2px dashed rgba(81, 77, 68, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 4px 14px rgba(60, 60, 40, 0.12);
+  overflow: hidden;
+  background: rgba(255, 253, 243, 0.9);
+}
+
+.science-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-placeholder--science {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  margin-bottom: 0.9rem;
+}
+
+.science-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.6rem);
+  width: 100%;
+}
+
+.science-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.science-card-title {
+  font-family: "Gaegu", "Patrick Hand", cursive;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  line-height: 1.1;
+  margin-bottom: 0.45em;
+  color: var(--ink);
+}
+
+.science-card-blurb {
+  font-size: clamp(0.92rem, 0.9vw + 0.7rem, 1.02rem);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.hobby-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  width: 100%;
+}
+
+.hobby-card {
+  margin: 0;
+  min-width: 0;
+  aspect-ratio: 1;
+}
+
+.hobby-flip {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 16px 20px 14px 22px / 18px 14px 22px 16px;
+  perspective: 900px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hobby-flip:focus-visible {
+  outline: 3px solid rgba(45, 122, 74, 0.55);
+  outline-offset: 3px;
+}
+
+.hobby-flip-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  transition: transform 0.55s ease;
+  transform-style: preserve-3d;
+}
+
+.hobby-flip:hover .hobby-flip-inner,
+.hobby-flip:focus-visible .hobby-flip-inner,
+.hobby-flip.is-flipped .hobby-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.hobby-flip-front,
+.hobby-flip-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px 20px 14px 22px / 18px 14px 22px 16px;
+  overflow: hidden;
+}
+
+.hobby-flip-front {
+  display: block;
+}
+
+.hobby-flip-front--photo {
+  border: 2px dashed rgba(81, 77, 68, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 4px 14px rgba(60, 60, 40, 0.12);
+}
+
+.hobby-flip-placeholder-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 3rem;
+  font-family: "Patrick Hand", "Nunito", sans-serif;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  line-height: 1.35;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.hobby-flip-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hobby-flip-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 2vw, 1.1rem);
+  background: var(--paper-translucent);
+  border: 2px dashed rgba(81, 77, 68, 0.32);
+  box-shadow:
+    0 8px 20px rgba(55, 55, 35, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transform: rotateY(180deg);
+}
+
+.hobby-flip-text {
+  font-family: "Patrick Hand", "Nunito", sans-serif;
+  font-size: clamp(0.76rem, 1.15vw, 0.9rem);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--ink);
+}
+
+.hobby-flip-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.hobby-flip-link:hover {
+  color: var(--ink);
+}
+
+.hobby-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 0.65rem;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-family: "Gaegu", "Patrick Hand", cursive;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  line-height: 1;
+  color: var(--ink);
+  background: var(--paper-translucent);
+  padding: 0.25em 0.7em 0.35em;
+  border-radius: 12px 16px 10px 18px / 14px 10px 18px 12px;
+  box-shadow: 0 4px 12px rgba(60, 60, 40, 0.18);
+  white-space: nowrap;
+  max-width: calc(100% - 1rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (hover: none) {
+  .hobby-flip:hover .hobby-flip-inner {
+    transform: none;
+  }
+
+  .hobby-flip.is-flipped .hobby-flip-inner,
+  .hobby-flip:focus-visible .hobby-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .science-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .contact-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-photo-card {
+    margin-left: 0;
+    margin-top: 0;
+    align-self: center;
+    flex: 0 1 auto;
+    width: min(280px, 85vw);
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-title { transform: none; }
+  .page-title-aside { transform: none; white-space: normal; }
+  .paper-panel { transform: none; }
+  .about-section-title { transform: none; }
+  .paper-panel--contact { width: 100%; max-width: 100%; }
+  .contact-photo-card { transform: rotate(0.4deg); }
+  .card-grid { grid-template-columns: 1fr; }
+  .hobby-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-photo-circle {
+    width: clamp(90px, 22vw, 120px);
+    height: clamp(90px, 22vw, 120px);
+    right: 0.35rem;
+    transform: translateY(18%);
+  }
+  .paper-panel--intro {
+    padding-right: clamp(4.25rem, 30vw, 7rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .hobby-grid { grid-template-columns: 1fr; }
+}

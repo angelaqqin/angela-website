@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awesomesauce — Angela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Patrick+Hand&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pages.css">
+  <link rel="stylesheet" href="../footer.css">
+</head>
+<body class="notebook">
+  <div id="app"></div>
+  <script src="../page-layout.js"></script>
+  <script>
+    // Edit this list to add posts / notes / essays.
+    const posts = [
+      {
+        title: "All the Deets on DRTs (so far)",
+        date: "May 2026",
+        excerpt: "A tour through defense-associated reverse transcriptases, where they came from, why they matter, and how much we DON'T know...",
+        link: "#",
+        tilt: -0.6
+      },
+      {
+        title: "Cas13 is Pretty Cool",
+        date: "April 2026",
+        excerpt: "An RNA-targeting CRISPR system with weird collateral activity, transcriptome-scale potential, and the potential to reveal the secrets of the dark genome...",
+        link: "#",
+        tilt: 0.7
+      },
+      {
+        title: "Oh, All The Places That dCas Will Go!",
+        date: "March 2026",
+        excerpt: "Catalytically dead Cas proteins are key to all sorts of different genetic payloads, reengineering programmable DNA targeting into a platform for regulation, imaging, editing, and so much more!",
+        link: "#",
+        tilt: -0.4
+      },
+      {
+        title: "So, What Even Is CRISPR?",
+        date: "Feb 2026",
+        excerpt: "We've all heard the 'molecular scissors' analogy of CRISPR-Cas9 gene editing, but how does it <em>actually</em> work?",
+        link: "#",
+        tilt: 0.5
+      },
+    ];
+
+    const previews = posts.map(p =>
+      PaperPanel({
+        title: p.title,
+        meta: p.date,
+        tilt: p.tilt,
+        body: `<p>${p.excerpt}</p>`,
+        footer: `<a class="paper-link" href="${p.link}">read more &rarr;</a>`
+      })
+    ).join("");
+
+    document.getElementById("app").innerHTML = NotebookPageLayout({
+      title: "Awesomesauce",
+      subtitle: "things I'm learning about!",
+      children: previews
+    });
+  </script>
+</body>
+</html>

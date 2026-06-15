@@ -1,0 +1,242 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #f4f1e4 url("assets/bg.png") center center / cover no-repeat fixed;
+}
+
+.viewport {
+  position: relative;
+  width: 100%;
+  box-sizing: content-box;
+  min-height: 100svh;
+  padding-bottom: clamp(64px, 8vh, 120px);
+  overflow: visible;
+  --safe-top: clamp(3.25rem, 9svh, 4.75rem);
+  --safe-bottom: clamp(2.75rem, 7svh, 3.75rem);
+  --safe-side: clamp(0.85rem, 3vw, 2rem);
+}
+
+.board {
+  position: absolute;
+  top: var(--safe-top);
+  right: var(--safe-side);
+  bottom: var(--safe-bottom);
+  left: var(--safe-side);
+}
+
+/* ── center greeting + scribble ─────────────────────────────── */
+.hero {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-scribble {
+  position: absolute;
+  width: clamp(42vw, 50vw, 56vw);
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-text {
+  position: relative;
+  font-family: "Gaegu", "Patrick Hand", "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: clamp(3.2vw, 4.6vw, 5rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #1c1c1c;
+  white-space: nowrap;
+}
+
+/* ── floating doodle icon ──────────────────────────────────── */
+.icon {
+  position: absolute;
+  width: var(--w, 11vw);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6vw;
+  text-decoration: none;
+  color: #1a1a1a;
+  z-index: 1;
+}
+
+/* icon positions within the padded board safe area */
+.icon--projects     { left: 50%; top: 18%; }
+.icon--about        { left: 17%; top: 22%; }
+.icon--contact      { left: 83%; top: 22%; }
+.icon--awesomesauce {
+  left: 17%;
+  top: 73%;
+  --w: calc(14vw * 0.875);
+  width: var(--w);
+}
+.icon--videos       { left: 50%; top: 80%; }
+
+.icon--projects .icon-label {
+  transform: translateY(clamp(-0.7rem, -1.5vw, -1.1rem));
+}
+
+.icon--videos .icon-label {
+  transform: translateY(clamp(-0.35rem, -0.8vw, -0.6rem));
+}
+
+.icon--videos .icon-art {
+  margin-top: clamp(0.4rem, 1vw, 0.85rem);
+}
+.icon--reading      { left: 83%; top: 74%; }
+
+.icon-art {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 4.5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  filter: drop-shadow(0 0.7vw 0.7vw rgba(0, 0, 0, 0.28));
+  transition: transform 0.2s ease, filter 0.2s ease;
+  will-change: transform;
+}
+
+.icon-art img,
+.icon-art svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.icon-art--plate {
+  background: rgba(244, 241, 228, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 24%;
+  padding: 9%;
+}
+
+.icon-art--prominent {
+  filter: drop-shadow(0 0.84vw 0.84vw rgba(0, 0, 0, 0.336));
+}
+
+.icon:hover .icon-art,
+.icon:focus-visible .icon-art {
+  transform: scale(1.12) rotate(-2deg);
+  filter: drop-shadow(0 1.2vw 1vw rgba(0, 0, 0, 0.34));
+}
+
+.icon:hover .icon-art--prominent,
+.icon:focus-visible .icon-art--prominent {
+  filter: drop-shadow(0 1.44vw 1.2vw rgba(0, 0, 0, 0.408));
+}
+
+.icon:focus-visible {
+  outline: none;
+}
+
+.icon-label {
+  font-family: "Gaegu", "Patrick Hand", "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: calc(var(--w) * 0.24);
+  line-height: 1;
+  color: #1c1c1c;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  background: #f8f7ea;
+  border-radius: 20em;
+  padding: 0.18em 0.55em 0.22em;
+}
+
+@keyframes float {
+  0%,
+  100% { transform: translateY(0); }
+  50%  { transform: translateY(-0.55vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-art { animation: none; }
+}
+
+@media (max-width: 900px) {
+  .viewport {
+    --safe-top: clamp(3rem, 8svh, 4.25rem);
+    --safe-bottom: clamp(2.5rem, 6.5svh, 3.25rem);
+  }
+
+  .hero-scribble {
+    width: clamp(48vw, 58vw, 64vw);
+  }
+
+  .icon--projects     { top: 20%; }
+  .icon--about        { top: 24%; left: 16%; }
+  .icon--contact      { top: 24%; left: 84%; }
+  .icon--awesomesauce { top: 74%; left: 16%; }
+  .icon--videos       { top: 81%; }
+  .icon--reading      { top: 75%; left: 84%; }
+}
+
+@media (max-width: 600px) {
+  .viewport {
+    --safe-top: clamp(2.75rem, 7.5svh, 3.75rem);
+    --safe-side: clamp(0.65rem, 2.5vw, 1.25rem);
+  }
+
+  .hero-text {
+    font-size: clamp(4.8vw, 6vw, 2.2rem);
+  }
+
+  .icon {
+    gap: 0.45vw;
+  }
+
+  .icon--projects     { top: 21%; --w-adjust: 0.88; }
+  .icon--about        { top: 26%; left: 15%; }
+  .icon--contact      { top: 26%; left: 85%; }
+  .icon--awesomesauce { top: 75%; left: 15%; }
+  .icon--videos       { top: 82%; }
+  .icon--reading      { top: 76%; left: 85%; }
+}
+
+@media (max-height: 700px) {
+  .viewport {
+    --safe-top: clamp(2.5rem, 7svh, 3.5rem);
+    --safe-bottom: clamp(2.25rem, 6svh, 3rem);
+  }
+
+  .hero-scribble {
+    width: clamp(38vw, 46vw, 52vw);
+  }
+
+  .hero-text {
+    font-size: clamp(2.8vw, 3.8vw, 3.2rem);
+  }
+
+  .icon--projects { top: 22%; }
+  .icon--about,
+  .icon--contact  { top: 27%; }
+  .icon--awesomesauce { top: 76%; }
+  .icon--videos   { top: 83%; }
+  .icon--reading  { top: 77%; }
+}

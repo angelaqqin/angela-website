@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Angela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Patrick+Hand&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pages.css">
+  <link rel="stylesheet" href="../footer.css">
+</head>
+<body class="notebook">
+  <div id="app"></div>
+  <script src="../page-layout.js"></script>
+  <script>
+    // Edit this list to add / change projects.
+    const projects = [
+      {
+        title: "Antarctic Defense Repertoires",
+        desc: "Computationally mapping novel antiviral defense systems across single-cell genomes from Antarctic subglacial lake microbes.",
+        img: "../assets/antarctica-project.png",
+        alt: "Antarctic landscape with penguins, ice, and glaciers",
+      },
+      {
+        title: "Decoding DRT10",
+        desc: "Investigating how a novel reverse-transcriptase-associated bacterial defense system, DRT10, provides immunity from phage infection via a repeat-derived cDNA product.",
+        img: "../assets/mskcc-project.png",
+        alt: "Memorial Sloan Kettering Cancer Center main entrance",
+      },
+    ];
+
+    const cards = projects.map(p =>
+      PaperPanel({
+        title: p.title,
+        body: `<p>${p.desc}</p><div class="project-image"><img src="${p.img}" alt="${p.alt}" loading="lazy"></div>`,
+        footer: `<span class="paper-link paper-link--soon">Coming Soon!</span>`
+      })
+    ).join("");
+
+    document.getElementById("app").innerHTML = NotebookPageLayout({
+      title: "Projects",
+      subtitle: "things I'm working on!",
+      children: `<div class="card-grid">${cards}</div>`
+    });
+  </script>
+</body>
+</html>

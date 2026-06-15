@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Angela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Patrick+Hand&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pages.css">
+  <link rel="stylesheet" href="../footer.css">
+</head>
+<body class="notebook notebook--about">
+  <div id="app"></div>
+  <script src="../page-layout.js"></script>
+  <script>
+    const scienceTopics = [
+      {
+        title: "CRISPR & Gene Editors",
+        blurb: "Super interested in programmable molecular tools, from different CRISPR-Cas systems to base editors, prime editors, IS110, and whatever comes next!!",
+        img: "../assets/crispr-group-photo.jpg",
+        alt: "Group photo with CRISPR researchers",
+        tilt: -0.5
+      },
+      {
+        title: "Bacterial Defense",
+        blurb: "All the different ways that bacteria defend themselves from phages, and how these immune systems can reveal funky and possibly useful molecular machinery!",
+        img: "../assets/phage-defense.jpg",
+        alt: "Electron micrograph of bacteriophages on a bacterial cell",
+        tilt: 0.4
+      },
+      {
+        title: "Functional Genomics",
+        blurb: "Genome-scale, high-throughput ways of asking biological questions with CRISPR, especially screens that connect genes, perturbations, and cellular phenotypes!",
+        img: "../assets/functional-genomics-pipette.jpg",
+        alt: "Multichannel pipette over a high-throughput plate",
+        tilt: -0.3
+      },
+    ];
+
+    const hobbies = [
+      {
+        caption: "Mahjong",
+        img: "../assets/P1010717.JPG",
+        desc: `Have been running mahjong games for &gt;4 years, from Calgary to Toronto! Started <a class="hobby-flip-link" href="https://www.instagram.com/vic.mahjongsociety/" target="_blank" rel="noopener noreferrer">Hart House Mahjong Club</a>, now the 2nd largest mahjong club in Toronto — come play with us :)`
+      },
+      {
+        caption: "Figure Skating",
+        img: "../assets/P1010834.JPG",
+        desc: "Quit in 2020 after skating for over 12 years and recently just got back into the sport in university + having so much fun! Flexibility is hard to get back though..."
+      },
+      {
+        caption: "Biking",
+        img: "../assets/IMG_1290.jpg",
+        imgPos: "72% 68%",
+        desc: "Can't survive anywhere without my bike... even biked from Niagara Falls to Toronto once!! Ask me for tips for biking in the city (1.5x bike theft veteran) :))"
+      },
+      {
+        caption: "Running",
+        img: "../assets/IMG_5660.jpg",
+        imgPos: "center 38%",
+        desc: "work in progress..."
+      },
+      {
+        caption: "Guzheng",
+        frontText: "picture in progress...",
+        desc: "Learned to perform in a local Calgary nursing home for Asian seniors! Very very beginner though... HMU if you know any guzheng/guqin teachers in Toronto!!"
+      },
+      {
+        caption: "Mandarin",
+        img: "../assets/P1020016.JPG",
+        desc: "Always learning... send me your cpop song recs to play during Mahjong Club!!"
+      },
+    ];
+
+    function scienceCard(topic) {
+      const style = topic.tilt ? ` style="--tilt:${topic.tilt}deg"` : "";
+      return `
+        <article class="science-card paper-panel"${style}>
+          <div class="science-image"><img src="${topic.img}" alt="${topic.alt}" loading="lazy"></div>
+          <h3 class="science-card-title">${topic.title}</h3>
+          <p class="science-card-blurb">${topic.blurb}</p>
+        </article>`;
+    }
+
+    function hobbyCard(hobby) {
+      const imgStyle = hobby.imgPos ? ` style="object-position: ${hobby.imgPos}"` : "";
+      const photo = hobby.img
+        ? `<img class="hobby-flip-photo" src="${hobby.img}" alt="" loading="lazy"${imgStyle}>`
+        : "";
+      const frontClass = hobby.img ? "hobby-flip-front hobby-flip-front--photo" : "hobby-flip-front img-placeholder";
+      const frontNote = !hobby.img && hobby.frontText
+        ? `<span class="hobby-flip-placeholder-text">${hobby.frontText}</span>`
+        : "";
+      return `
+        <figure class="hobby-card">
+          <div class="hobby-flip" tabindex="0" role="button" aria-label="${hobby.caption} — flip for more">
+            <span class="hobby-flip-inner">
+              <span class="${frontClass}" aria-hidden="true">
+                ${photo}
+                ${frontNote}
+                <span class="hobby-caption">${hobby.caption}</span>
+              </span>
+              <span class="hobby-flip-back">
+                <span class="hobby-flip-text">${hobby.desc}</span>
+              </span>
+            </span>
+          </div>
+        </figure>`;
+    }
+
+    const quickAbout = `
+      <section class="about-section about-section--intro">
+        <div class="about-intro-wrap">
+          ${PaperPanel({
+            title: "Hi, I'm Angela",
+            tilt: -0.4,
+            className: "paper-panel--intro",
+            body: `<p>I'm a second-year biochemistry and neuroscience student at the University of Toronto. I'm originally from Calgary, Alberta, and before that, Buffalo, NY! I love love love talking to anyone and everyone, playing chess (poorly), TypeRacer, my college dining hall, different Rubik's cubes, cats, and group workout classes. Thanks for visiting my website!!</p>`
+          })}
+          <img class="about-photo-circle" src="../assets/IMG_0350.jpg" alt="Angela" loading="lazy">
+        </div>
+      </section>`;
+
+    const scienceSection = `
+      <section class="about-section">
+        <h2 class="about-section-title">Science I Like</h2>
+        <div class="science-grid">
+          ${scienceTopics.map(scienceCard).join("")}
+        </div>
+      </section>`;
+
+    const hobbiesSection = `
+      <section class="about-section">
+        <h2 class="about-section-title">Other Things I Like</h2>
+        <div class="hobby-grid">
+          ${hobbies.map(hobbyCard).join("")}
+        </div>
+      </section>`;
+
+    document.getElementById("app").innerHTML = NotebookPageLayout({
+      title: "About",
+      children: quickAbout + scienceSection + hobbiesSection
+    });
+
+    const hobbyFlips = document.querySelectorAll(".hobby-flip");
+    const touchFlip = window.matchMedia("(hover: none)").matches;
+    if (touchFlip) {
+      hobbyFlips.forEach((card) => {
+        card.addEventListener("click", (e) => {
+          if (e.target.closest(".hobby-flip-link")) return;
+          const open = card.classList.contains("is-flipped");
+          hobbyFlips.forEach((b) => b.classList.remove("is-flipped"));
+          if (!open) card.classList.add("is-flipped");
+        });
+      });
+    }
+
+    document.querySelectorAll(".hobby-flip-link").forEach((link) => {
+      link.addEventListener("click", (e) => e.stopPropagation());
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+/* Global copyright footer — included on every page */
+.site-copyright {
+  position: fixed;
+  bottom: clamp(0.55rem, 1.8svh, 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-family: "Patrick Hand", "Gaegu", "Comic Sans MS", cursive;
+  font-size: clamp(0.82rem, 1.4vw, 0.98rem);
+  line-height: 1;
+  color: #1f1d18;
+  background: rgba(248, 247, 234, 0.95);
+  padding: 0.32em 0.85em 0.38em;
+  border-radius: 14px 18px 12px 20px / 16px 12px 20px 14px;
+  box-shadow: 0 4px 14px rgba(60, 60, 40, 0.18);
+  pointer-events: none;
+  white-space: nowrap;
+}

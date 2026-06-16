@@ -20,7 +20,10 @@ body {
   width: 100%;
   box-sizing: content-box;
   min-height: 100svh;
-  padding-bottom: clamp(64px, 8vh, 120px);
+  --scroll-room-top: clamp(1.5rem, 4svh, 2.75rem);
+  --scroll-buffer-bottom: clamp(80px, 12vh, 160px);
+  padding-top: var(--scroll-room-top);
+  padding-bottom: calc(clamp(64px, 8vh, 120px) + var(--scroll-buffer-bottom));
   overflow: visible;
   --safe-top: clamp(3.25rem, 9svh, 4.75rem);
   --safe-bottom: clamp(2.75rem, 7svh, 3.75rem);
@@ -31,7 +34,7 @@ body {
   position: absolute;
   top: var(--safe-top);
   right: var(--safe-side);
-  bottom: var(--safe-bottom);
+  bottom: calc(var(--safe-bottom) + var(--scroll-buffer-bottom));
   left: var(--safe-side);
 }
 
@@ -92,7 +95,7 @@ body {
   --w: calc(14vw * 0.875);
   width: var(--w);
 }
-.icon--videos       { left: 50%; top: 80%; }
+.icon--videos       { left: 50%; top: 86%; }
 
 .icon--projects .icon-label {
   transform: translateY(clamp(-0.7rem, -1.5vw, -1.1rem));
@@ -104,6 +107,8 @@ body {
 
 .icon--videos .icon-art {
   margin-top: clamp(0.4rem, 1vw, 0.85rem);
+  position: relative;
+  top: clamp(0.35rem, 0.85vw, 0.65rem);
 }
 .icon--reading      { left: 83%; top: 74%; }
 
@@ -193,7 +198,7 @@ body {
   .icon--about        { top: 24%; left: 16%; }
   .icon--contact      { top: 24%; left: 84%; }
   .icon--awesomesauce { top: 74%; left: 16%; }
-  .icon--videos       { top: 81%; }
+  .icon--videos       { top: 87%; }
   .icon--reading      { top: 75%; left: 84%; }
 }
 
@@ -215,7 +220,7 @@ body {
   .icon--about        { top: 26%; left: 15%; }
   .icon--contact      { top: 26%; left: 85%; }
   .icon--awesomesauce { top: 75%; left: 15%; }
-  .icon--videos       { top: 82%; }
+  .icon--videos       { top: 88%; }
   .icon--reading      { top: 76%; left: 85%; }
 }
 
@@ -237,6 +242,6 @@ body {
   .icon--about,
   .icon--contact  { top: 27%; }
   .icon--awesomesauce { top: 76%; }
-  .icon--videos   { top: 83%; }
+  .icon--videos   { top: 89%; }
   .icon--reading  { top: 77%; }
 }

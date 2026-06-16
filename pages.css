@@ -239,35 +239,49 @@ body.notebook::before {
   box-shadow: 2px 2px 0 rgba(81, 77, 68, 0.45);
 }
 
-/* contact page — compact left-aligned panel + icon rows */
+/* contact page — bubble + photo in one left-aligned flex row */
 .notebook--contact .page-content {
   align-items: flex-start;
+  overflow: visible;
 }
 
 .notebook--contact .page-title {
   margin-bottom: clamp(0.9rem, 2vw, 1.4rem);
 }
 
+/* lift photo to title row: title block height + title gap + card top padding */
+.notebook--contact {
+  --contact-photo-lift: calc(
+    clamp(0.9rem, 2vw, 1.4rem)
+    + clamp(2.6rem, 9vw, 5.5rem) * 1.19
+    + clamp(0.65rem, 1.4vw, 0.9rem)
+  );
+}
+
 .contact-layout {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: flex-start;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  width: 100%;
-  min-width: 0;
+  gap: clamp(8rem, 9vw, 10rem);
+  width: fit-content;
+  max-width: 100%;
+  overflow: visible;
 }
 
 .contact-photo-card {
-  flex: 0 1 clamp(200px, 28vw, 300px);
-  margin-left: auto;
-  margin-top: clamp(0.25rem, 1vw, 0.75rem);
+  flex: none;
+  align-self: flex-start;
+  width: clamp(200px, 28vw, 300px);
+  max-width: 300px;
+  margin: 0;
   padding: clamp(0.65rem, 1.4vw, 0.9rem) clamp(0.65rem, 1.4vw, 0.9rem) clamp(1.4rem, 2.5vw, 2rem);
   background: var(--paper-translucent);
   border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
   box-shadow:
     0 10px 28px rgba(55, 55, 35, 0.2),
     0 1px 0 rgba(255, 255, 255, 0.6) inset;
-  transform: rotate(1.1deg);
+  transform: translateY(calc(-1 * var(--contact-photo-lift))) rotate(1.1deg);
 }
 
 .contact-photo {
@@ -282,10 +296,10 @@ body.notebook::before {
 }
 
 .paper-panel--contact {
+  flex: none;
   width: fit-content;
   max-width: min(90%, 520px);
   margin: 0;
-  align-self: flex-start;
   padding: clamp(0.85rem, 2vw, 1.25rem) clamp(1rem, 2.2vw, 1.5rem);
 }
 
@@ -380,6 +394,7 @@ body.notebook::before {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transform: scale(1.05);
 }
 
 /* about page */
@@ -412,35 +427,37 @@ body.notebook::before {
 }
 
 .about-section--intro {
-  position: relative;
-}
-
-.about-intro-wrap {
-  position: relative;
   width: 100%;
 }
 
+.about-intro-wrap {
+  width: 100%;
+}
+
+.about-content-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.about-text {
+  min-width: 0;
+}
+
 .about-photo-circle {
-  position: absolute;
-  top: 0;
-  right: clamp(0.25rem, 2vw, 1.25rem);
+  flex-shrink: 0;
   width: clamp(120px, 14vw, 190px);
   height: clamp(120px, 14vw, 190px);
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
-  z-index: 2;
   border: 3px solid rgba(248, 247, 234, 0.95);
   box-shadow: 0 6px 18px rgba(60, 60, 40, 0.22);
-  transform: translateY(28%);
-  pointer-events: none;
 }
 
 .paper-panel--intro {
-  position: relative;
-  z-index: 1;
   max-width: 100%;
-  padding-right: clamp(5.5rem, 17vw, 10rem);
 }
 
 .paper-panel--intro .panel-body p {
@@ -674,21 +691,28 @@ body.notebook::before {
 
 @media (max-width: 900px) {
   .science-grid { grid-template-columns: 1fr; }
+
+  .about-content-row {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photo-circle {
+    justify-self: center;
+  }
 }
 
 @media (max-width: 768px) {
   .contact-layout {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
   }
 
   .contact-photo-card {
-    margin-left: 0;
-    margin-top: 0;
     align-self: center;
-    flex: 0 1 auto;
     width: min(280px, 85vw);
     max-width: 100%;
+    transform: rotate(0.4deg);
   }
 }
 
@@ -704,11 +728,6 @@ body.notebook::before {
   .about-photo-circle {
     width: clamp(90px, 22vw, 120px);
     height: clamp(90px, 22vw, 120px);
-    right: 0.35rem;
-    transform: translateY(18%);
-  }
-  .paper-panel--intro {
-    padding-right: clamp(4.25rem, 30vw, 7rem);
   }
 }
 

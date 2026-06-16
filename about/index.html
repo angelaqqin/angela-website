@@ -69,7 +69,7 @@
       {
         caption: "Mandarin",
         img: "../assets/P1020016.JPG",
-        desc: "Always learning... send me your cpop song recs to play during Mahjong Club!!"
+        desc: `Always learning... send me your <a class="hobby-flip-link" href="https://music.apple.com/ca/playlist/%E9%AB%98%E6%99%A8%E5%B2%81%E6%95%B0%E7%9C%9F%E5%A4%A7/pl.u-b3b8Rvguy2vlV6j" target="_blank" rel="noopener noreferrer">cpop song recs</a> to play during Mahjong Club!!`
       },
     ];
 
@@ -113,12 +113,16 @@
       <section class="about-section about-section--intro">
         <div class="about-intro-wrap">
           ${PaperPanel({
-            title: "Hi, I'm Angela",
             tilt: -0.4,
             className: "paper-panel--intro",
-            body: `<p>I'm a second-year biochemistry and neuroscience student at the University of Toronto. I'm originally from Calgary, Alberta, and before that, Buffalo, NY! I love love love talking to anyone and everyone, playing chess (poorly), TypeRacer, my college dining hall, different Rubik's cubes, cats, and group workout classes. Thanks for visiting my website!!</p>`
+            html: `<div class="about-content-row">
+              <div class="about-text">
+                <h2 class="panel-title">Hi, I'm Angela</h2>
+                <div class="panel-body"><p>I'm a second-year biochemistry and neuroscience student at the University of Toronto. I'm originally from Calgary, Alberta, and before that, Buffalo, NY! I love love love talking to anyone and everyone, playing chess (poorly), TypeRacer, my college dining hall, different Rubik's cubes, cats, and group workout classes. Thanks for visiting my website!!</p></div>
+              </div>
+              <img class="about-photo-circle about-photo" src="../assets/IMG_0350.jpg" alt="Angela" loading="lazy">
+            </div>`
           })}
-          <img class="about-photo-circle" src="../assets/IMG_0350.jpg" alt="Angela" loading="lazy">
         </div>
       </section>`;
 

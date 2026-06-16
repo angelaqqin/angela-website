@@ -125,3 +125,21 @@ function buildBoard() {
 buildHero();
 buildBoard();
 document.querySelector(".viewport").insertAdjacentHTML("beforeend", SiteCopyright());
+
+/** Extra scroll room above the home layout; default view matches pre-headroom design. */
+(function setHomeScrollHeadroom() {
+  const viewport = document.querySelector(".viewport");
+  if (!viewport) return;
+
+  const apply = () => {
+    const y = parseFloat(getComputedStyle(viewport).paddingTop) || 0;
+    if (y > 0) window.scrollTo(0, y);
+  };
+
+  if (document.readyState === "complete") apply();
+  else window.addEventListener("load", apply, { once: true });
+
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) apply();
+  });
+})();

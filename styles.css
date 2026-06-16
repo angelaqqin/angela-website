@@ -95,7 +95,7 @@ body {
   --w: calc(14vw * 0.875);
   width: var(--w);
 }
-.icon--videos       { left: 50%; top: 86%; }
+.icon--videos       { left: 50%; top: 86%; transform: translate(-50%, calc(-50% + 45px)); }
 
 .icon--projects .icon-label {
   transform: translateY(clamp(-0.7rem, -1.5vw, -1.1rem));

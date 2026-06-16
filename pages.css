@@ -494,6 +494,11 @@ body.notebook::before {
   object-position: center;
 }
 
+/* crispr-group-photo.jpg has thin white strips on the source left/right edges */
+.science-image img[src*="crispr-group-photo"] {
+  transform: scale(1.08);
+}
+
 .img-placeholder--science {
   aspect-ratio: 4 / 3;
   width: 100%;
